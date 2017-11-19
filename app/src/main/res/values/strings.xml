@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PocketLocation</string>
+    <string name="button_save">Save</string>
+
+    <string-array name="acc_type">
+        <item>Blood diseases</item>
+        <item>Endocrine and metabolic diseases</item>
+        <item>Psychic disorders</item>
+        <item>Opthalmological diseases</item>
+        <item>Ear disorders</item>
+        <item>Circulatory System disorders</item>
+        <item>Respiratory System disorders</item>
+        <item>Digestive System disorders</item>
+        <item>Skin diseases</item>
+        <item>Musculoskeletal System diseases</item>
+        <item>Urogenital System diseases</item>
+        <item>External causes of morbidity and mortality</item>
+    </string-array>
+</resources>

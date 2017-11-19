@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:paddingBottom="70dp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.katsigianni.pocketlocation.LoginActivity"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/pocketlogo"
+        android:layout_marginTop="42dp"
+        android:id="@+id/imageView2"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:layout_marginLeft="0dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:ems="10"
+        android:id="@+id/surname"
+        android:textSize="20dp"
+        android:hint="Surname"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/imageView2"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:layout_marginLeft="0dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:ems="10"
+        android:id="@+id/AMKA"
+        android:textSize="20dp"
+        android:hint="AMKA"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/surname"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="111dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/Loginbut"
+        android:text="Log in"
+        android:layout_marginLeft="1dp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_above="@+id/signupbut"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="26dp"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Sign up"
+        android:layout_width="111dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/signupbut"
+        android:background="#2176F3"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
