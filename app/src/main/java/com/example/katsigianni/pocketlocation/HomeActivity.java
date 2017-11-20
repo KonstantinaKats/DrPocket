@@ -272,8 +272,6 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
     public void onNothingSelected(AdapterView<?> arg0) {
 
         // TODO Auto-generated method stub
-        //just a new line
-        //to commit
     }
 
 
