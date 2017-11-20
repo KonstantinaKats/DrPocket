@@ -13,6 +13,7 @@ import android.util.Log;
 
 public class UserDbHelper extends SQLiteOpenHelper {
 
+    //TODO na allakso onoma
     public static final String DATABASE_NAME = "MALAKISMENO";
     public static final int DATABASE_VERSION = 1;
     SQLiteDatabase db;
