@@ -270,9 +270,12 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
     }
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
 
+        // TODO Auto-generated method stub
+        //just a new line
+        //to commit
     }
+
 
     public void adduser (View view){
         String name = Name.getText().toString();
