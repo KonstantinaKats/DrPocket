@@ -1,6 +1,7 @@
 package com.example.katsigianni.pocketlocation;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -22,6 +23,7 @@ public class LoggedActivity extends AppCompatActivity {
     private TextView t;
     private LocationManager locationManager;
     private LocationListener locationListener;
+    private Button logout;
 
 
     @Override
@@ -34,6 +36,7 @@ public class LoggedActivity extends AppCompatActivity {
 
         t = (TextView) findViewById(R.id.coors);
         b = (Button) findViewById(R.id.buttoncoor);
+        logout = (Button) findViewById(R.id.logoutbut);
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
@@ -75,6 +78,8 @@ public class LoggedActivity extends AppCompatActivity {
 
         }
 
+       logoutButton();
+
     }
 
     @Override
@@ -98,9 +103,25 @@ public class LoggedActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+   private void logoutButton() {
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                SaveSharedPreference.clearUserName(LoggedActivity.this);
+                Intent intent = new Intent(LoggedActivity.this, LoginActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
 
 
     }
+
 
 
 

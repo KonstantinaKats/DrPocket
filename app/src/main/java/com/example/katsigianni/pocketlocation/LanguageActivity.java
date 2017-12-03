@@ -18,8 +18,19 @@ public class LanguageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent page = new Intent(LanguageActivity.this, LoginActivity.class);
-                startActivity(page);
+                if(SaveSharedPreference.getUserName(LanguageActivity.this).length() == 0)
+                {
+                    Intent page = new Intent(LanguageActivity.this, LoginActivity.class);
+                    startActivity(page);
+                }
+                else
+                {
+                    Intent intent = new Intent(LanguageActivity.this, LoggedActivity.class);
+
+                    startActivity(intent);
+                }
+
+
             }
         });
     }
@@ -29,6 +40,8 @@ public class LanguageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_language);
         init();
+
+
 
     }
 }
