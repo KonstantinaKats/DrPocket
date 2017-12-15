@@ -8,28 +8,46 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.RemoteException;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class LoggedActivity extends AppCompatActivity {
+import org.altbeacon.beacon.Beacon;
+import org.altbeacon.beacon.BeaconConsumer;
+import org.altbeacon.beacon.BeaconManager;
+import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.Identifier;
+import org.altbeacon.beacon.MonitorNotifier;
+import org.altbeacon.beacon.RangeNotifier;
+import org.altbeacon.beacon.Region;
 
-     private Button b;
+import java.util.Collection;
+
+public class LoggedActivity extends AppCompatActivity implements BeaconConsumer {
+
+    public static final String TAG = "BeaconsEverywhere";
+    private Button b;
     private TextView t;
     private LocationManager locationManager;
     private LocationListener locationListener;
     private Button logout;
-
+    private BeaconManager beaconManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged);
+
+        beaconManager = BeaconManager.getInstanceForApplication(this);
+        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
+        beaconManager.bind(this);
 
         //   TextView welc=(TextView)findViewById(R.id.welcome);
         // welc.setText(getIntent().getExtras().getString("fullname"));
@@ -79,6 +97,53 @@ public class LoggedActivity extends AppCompatActivity {
         }
 
        logoutButton();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        beaconManager.unbind(this);
+    }
+
+    @Override
+    public void onBeaconServiceConnect() {
+     //   final Region region = new Region("myBeacons", Identifier.parse("EBEFD083-70A2-47C8-9837-E7B5634DF524"), null, null); // UUID,major,minor
+        beaconManager.addMonitorNotifier(new MonitorNotifier() {
+            @Override
+            public void didEnterRegion(Region region) {
+
+                    Log.i(TAG,"I just saw an beacon for the first time!");
+            }
+
+            @Override
+            public void didExitRegion(Region region) {
+                Log.i(TAG,"I no longer see an beacon");
+
+            }
+
+            @Override
+            public void didDetermineStateForRegion(int state, Region region) {
+                Log.i(TAG, "I have just switched from seeing/not seeing beacons: "+state);
+
+            }
+        });
+
+    /*    beaconManager.setRangeNotifier(new RangeNotifier() {
+            @Override
+            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+                for(Beacon oneBeacon :  beacons){
+                    Log.d(TAG,"distance: " + oneBeacon.getDistance() + "id: " + oneBeacon.getId1() + "/" + oneBeacon.getId2() + "/" + oneBeacon.getId3());
+                }
+
+            }
+        }); */
+
+        try {
+            beaconManager.startMonitoringBeaconsInRegion(new Region("EBEFD083-70A2-47C8-9837-E7B5634DF524", null, null, null));
+        } catch (RemoteException e) {
+
+        }
 
     }
 
