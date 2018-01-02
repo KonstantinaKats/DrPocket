@@ -108,26 +108,30 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
 
     @Override
     public void onBeaconServiceConnect() {
-     //   final Region region = new Region("myBeacons", Identifier.parse("EBEFD083-70A2-47C8-9837-E7B5634DF524"), null, null); // UUID,major,minor
+
         beaconManager.addMonitorNotifier(new MonitorNotifier() {
             @Override
             public void didEnterRegion(Region region) {
 
-                    Log.i(TAG,"I just saw an beacon for the first time!");
+                    Log.i(TAG,"User is in the"+region.getId1()+" "+region.getId2()+" "+region.getId3()+" "+region.getUniqueId());
             }
 
             @Override
             public void didExitRegion(Region region) {
-                Log.i(TAG,"I no longer see an beacon");
+                Log.i(TAG,"User exited the"+region.getId1()+" "+region.getId2()+" "+region.getId3()+" "+region.getUniqueId());
 
             }
 
             @Override
             public void didDetermineStateForRegion(int state, Region region) {
-                Log.i(TAG, "I have just switched from seeing/not seeing beacons: "+state);
+
 
             }
+
+
         });
+
+
 
     /*    beaconManager.setRangeNotifier(new RangeNotifier() {
             @Override
@@ -140,10 +144,14 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
         }); */
 
         try {
-            beaconManager.startMonitoringBeaconsInRegion(new Region("EBEFD083-70A2-47C8-9837-E7B5634DF524", null, null, null));
+
+            beaconManager.startMonitoringBeaconsInRegion(new Region("bedroom", Identifier.parse("EBEFD083-70A2-47C8-9837-E7B5634DF524"), Identifier.parse("571"), Identifier.parse("7552")));
+            beaconManager.startMonitoringBeaconsInRegion(new Region("livingroom", Identifier.parse("4B495443-4845-4E0D-0A00-000000000000"), Identifier.parse("53075"), Identifier.parse("29692")));
         } catch (RemoteException e) {
 
         }
+
+
 
     }
 
