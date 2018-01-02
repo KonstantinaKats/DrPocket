@@ -1,51 +1,74 @@
 package com.example.katsigianni.pocketlocation;
 
-import android.content.Context;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 public class HomeActivity extends AppCompatActivity implements OnItemSelectedListener {
-    Spinner s1,s2;
+    Spinner MainDisease,SpecifiedDisease;
     EditText Name, Surname, Personal_number, Blood, Oxygen;
-    Context context = this;
-    UserDbHelper userDbHelper;
-    SQLiteDatabase sqLiteDatabase;
-
+    Button btnSave;
+//    Context context = this;
+//    UserDbHelper userDbHelper;
+//    SQLiteDatabase sqLiteDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         Name = (EditText) findViewById(R.id.name);
         Surname = (EditText) findViewById(R.id.surname);
         Personal_number = (EditText) findViewById(R.id.personal_number);
         Blood = (EditText) findViewById(R.id.blood);
         Oxygen = (EditText) findViewById(R.id.oxygen);
-        s1 = (Spinner)findViewById(R.id.spinner1);
-        s2 = (Spinner)findViewById(R.id.spinner2);
-        s1.setOnItemSelectedListener(this);
+        MainDisease = (Spinner)findViewById(R.id.spinner1);
+        SpecifiedDisease = (Spinner)findViewById(R.id.spinner2);
+        MainDisease.setOnItemSelectedListener(this);
+        btnSave = (Button)findViewById(R.id.save);
+
+        //Load data when app opened
+        //new GetData().execute(Common.getAddressAPI());
+
+        //Add event to button
+        btnSave.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                new PostData(Name.getText().toString(),
+                            Surname.getText().toString(),
+                            Personal_number.getText().toString(),
+                            Blood.getText().toString(),
+                            Oxygen.getText().toString(),
+                            MainDisease.getSelectedItem().toString(),
+                            SpecifiedDisease.getSelectedItem().toString()).execute(Common.getAddressAPI());
+            }
+        });
 
      /*   //get the spinner from the xml.
         Spinner dropdown = (Spinner)findViewById(R.id.spinner1);
         //create a list of items for the spinner.
         String[] items = new String[]{"Blood diseases", "Endocrine and metabolic diseases", "Psychic disorders", "Opthalmological diseases", "Ear disorders", "Circulatory System disorders", "Respiratory System disorders", "Digestive System disorders", "Skin diseases", "Musculoskeletal System diseases", "Urogenital System diseases", "External causes of morbidity and mortality"};
         //create an adapter to describe how the items are displayed, adapters are used in several places in android.
-//There are multiple variations of this, but this is the basic variant.
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
-//set the spinners adapter to the previously created one.
-        dropdown.setAdapter(adapter); */
+        //There are multiple variations of this, but this is the basic variant.
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        //set the spinners adapter to the previously created one.
+                dropdown.setAdapter(adapter); */
 
     }
 
@@ -54,7 +77,7 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
     public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
                                long arg3) {
         // TODO Auto-generated method stub
-        String sp1= String.valueOf(s1.getSelectedItem());
+        String sp1= String.valueOf(MainDisease.getSelectedItem());
         Toast.makeText(this, sp1, Toast.LENGTH_SHORT).show();
         if(sp1.contentEquals("Blood diseases")) {
             List<String> list = new ArrayList<String>();
@@ -66,7 +89,7 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
                     android.R.layout.simple_spinner_item, list);
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter);
+            SpecifiedDisease.setAdapter(dataAdapter);
         }
         if(sp1.contentEquals("Endocrine and metabolic diseases")) {
             List<String> list = new ArrayList<String>();
@@ -81,7 +104,7 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
                     android.R.layout.simple_spinner_item, list);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter2.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter2);
+            SpecifiedDisease.setAdapter(dataAdapter2);
         }
 
         if(sp1.contentEquals("Psychic disorders")) {
@@ -97,7 +120,7 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
                     android.R.layout.simple_spinner_item, list);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter2.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter2);
+            SpecifiedDisease.setAdapter(dataAdapter2);
         }
 
         if(sp1.contentEquals("Opthalmological diseases")) {
@@ -114,7 +137,7 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
                     android.R.layout.simple_spinner_item, list);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter2.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter2);
+            SpecifiedDisease.setAdapter(dataAdapter2);
         }
 
 
@@ -128,7 +151,7 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
                     android.R.layout.simple_spinner_item, list);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter2.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter2);
+            SpecifiedDisease.setAdapter(dataAdapter2);
         }
 
         if(sp1.contentEquals("Circulatory System disorders")) {
@@ -147,7 +170,7 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
                     android.R.layout.simple_spinner_item, list);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter2.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter2);
+            SpecifiedDisease.setAdapter(dataAdapter2);
         }
 
 
@@ -167,7 +190,7 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
                     android.R.layout.simple_spinner_item, list);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter2.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter2);
+            SpecifiedDisease.setAdapter(dataAdapter2);
         }
 
         if(sp1.contentEquals("Digestive System disorders")) {
@@ -186,7 +209,7 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
                     android.R.layout.simple_spinner_item, list);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter2.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter2);
+            SpecifiedDisease.setAdapter(dataAdapter2);
         }
 
         if(sp1.contentEquals("Skin diseases")) {
@@ -203,7 +226,7 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
                     android.R.layout.simple_spinner_item, list);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter2.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter2);
+            SpecifiedDisease.setAdapter(dataAdapter2);
         }
 
 
@@ -218,7 +241,7 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
                     android.R.layout.simple_spinner_item, list);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter2.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter2);
+            SpecifiedDisease.setAdapter(dataAdapter2);
         }
 
         if(sp1.contentEquals("Urogenital System diseases")) {
@@ -238,7 +261,7 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
                     android.R.layout.simple_spinner_item, list);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter2.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter2);
+            SpecifiedDisease.setAdapter(dataAdapter2);
         }
 
 
@@ -264,7 +287,7 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
                     android.R.layout.simple_spinner_item, list);
             dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dataAdapter2.notifyDataSetChanged();
-            s2.setAdapter(dataAdapter2);
+            SpecifiedDisease.setAdapter(dataAdapter2);
         }
 
     }
@@ -274,20 +297,113 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
         // TODO Auto-generated method stub
     }
 
+    //function process data
+    private class GetData extends AsyncTask<String,Void,String>{
+        ProgressDialog pd = new ProgressDialog(HomeActivity.this);
 
-    public void adduser (View view){
-        String name = Name.getText().toString();
-        String surname = Surname.getText().toString();
-        String personal_number = Personal_number.getText().toString();
-        String blood = Blood.getText().toString();
-        String oxygen = Oxygen.getText().toString();
-        userDbHelper = new UserDbHelper(context);
-        sqLiteDatabase = userDbHelper.getWritableDatabase();
-        userDbHelper.addInformation(name,surname,personal_number,blood,oxygen,sqLiteDatabase);
-        Toast.makeText(getBaseContext(),"Account Successfully Created",Toast.LENGTH_LONG).show();
-        Intent signinpage = new Intent(HomeActivity.this, LoginActivity.class);
-        startActivity(signinpage);
-        userDbHelper.close();
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            //Pre Process
+            pd.setTitle("Please wait");
+            pd.show();
+        }
+
+
+        @Override
+        protected void onPostExecute(String s){
+            super.onPostExecute(s);
+            //done process
+
+            //use Gson to parse Json to Class
+            Gson gson = new Gson();
+            Type user = new TypeToken<User>(){}.getType();
+            user = gson.fromJson(s,user);
+
+            pd.dismiss();
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+            //running process...
+            String stream=null;
+            String urlString = params[0];
+
+            HTTPDataHandler http = new HTTPDataHandler();
+            stream = http.GetHTTPData(urlString);
+            return stream;
+
+        }
+
     }
 
+    private class PostData extends AsyncTask<String,String,String>{
+        ProgressDialog pd = new ProgressDialog(HomeActivity.this);
+        String name;
+        String surname;
+        String personal_number;
+        String blood;
+        String oxygen;
+        String mainDisease;
+        String specifiedDiseased;
+
+        public PostData(String name,String surname,String personal_number,String blood,String oxygen,String mainDisease,String specifiedDiseased) {
+            this.name = name;
+            this.surname = surname;
+            this.personal_number = personal_number;
+            this.blood = blood;
+            this.oxygen = oxygen;
+            this.mainDisease = mainDisease;
+            this.specifiedDiseased = specifiedDiseased;
+        }
+
+        @Override
+        protected  void onPreExecute(){
+            super.onPreExecute();
+            pd.setTitle("Please wait...");
+            pd.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params){
+            String urlString = params[0];
+
+            HTTPDataHandler hh = new HTTPDataHandler();
+            String json="{\"name\":\""+name+"\"," +
+                    "\"surname\":\""+surname+"\"," +
+                    "\"personal_number\":\"" + personal_number + "\"," +
+                    "\"blood\":\"" + blood + "\"," +
+                    "\"oxygen\":\"" + oxygen + "\"," +
+                    "\"mainDisease\":\"" + mainDisease + "\"," +
+                    "\"specifiedDisease\":\"" + specifiedDiseased + "\" }";
+            hh.PostHTTPData(urlString,json);
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String s){
+            super.onPostExecute(s);
+
+            //Refresh Data
+            //new GetData().execute(Common.getAddressAPI());
+
+            pd.dismiss();
+        }
+    }
+
+//    public void adduser (View view){
+//        String name = Name.getText().toString();
+//        String surname = Surname.getText().toString();
+//        String personal_number = Personal_number.getText().toString();
+//        String blood = Blood.getText().toString();
+//        String oxygen = Oxygen.getText().toString();
+//        userDbHelper = new UserDbHelper(context);
+//        sqLiteDatabase = userDbHelper.getWritableDatabase();
+//        userDbHelper.addInformation(name,surname,personal_number,blood,oxygen,sqLiteDatabase);
+//        Toast.makeText(getBaseContext(),"Account Successfully Created",Toast.LENGTH_LONG).show();
+//        Intent signinpage = new Intent(HomeActivity.this, LoginActivity.class);
+//        startActivity(signinpage);
+//        userDbHelper.close();
+//    }
 }
