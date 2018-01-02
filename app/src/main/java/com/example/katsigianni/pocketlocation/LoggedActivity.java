@@ -1,39 +1,60 @@
 package com.example.katsigianni.pocketlocation;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.RemoteException;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class LoggedActivity extends AppCompatActivity {
+import org.altbeacon.beacon.Beacon;
+import org.altbeacon.beacon.BeaconConsumer;
+import org.altbeacon.beacon.BeaconManager;
+import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.Identifier;
+import org.altbeacon.beacon.MonitorNotifier;
+import org.altbeacon.beacon.RangeNotifier;
+import org.altbeacon.beacon.Region;
 
-     private Button b;
+import java.util.Collection;
+
+public class LoggedActivity extends AppCompatActivity implements BeaconConsumer {
+
+    public static final String TAG = "BeaconsEverywhere";
+    private Button b;
     private TextView t;
     private LocationManager locationManager;
     private LocationListener locationListener;
-
+    private Button logout;
+    private BeaconManager beaconManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged);
 
+        beaconManager = BeaconManager.getInstanceForApplication(this);
+        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
+        beaconManager.bind(this);
+
         //   TextView welc=(TextView)findViewById(R.id.welcome);
         // welc.setText(getIntent().getExtras().getString("fullname"));
 
         t = (TextView) findViewById(R.id.coors);
         b = (Button) findViewById(R.id.buttoncoor);
+        logout = (Button) findViewById(R.id.logoutbut);
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
@@ -75,6 +96,63 @@ public class LoggedActivity extends AppCompatActivity {
 
         }
 
+       logoutButton();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        beaconManager.unbind(this);
+    }
+
+    @Override
+    public void onBeaconServiceConnect() {
+
+        beaconManager.addMonitorNotifier(new MonitorNotifier() {
+            @Override
+            public void didEnterRegion(Region region) {
+
+                    Log.i(TAG,"User is in the"+region.getId1()+" "+region.getId2()+" "+region.getId3()+" "+region.getUniqueId());
+            }
+
+            @Override
+            public void didExitRegion(Region region) {
+                Log.i(TAG,"User exited the"+region.getId1()+" "+region.getId2()+" "+region.getId3()+" "+region.getUniqueId());
+
+            }
+
+            @Override
+            public void didDetermineStateForRegion(int state, Region region) {
+
+
+            }
+
+
+        });
+
+
+
+    /*    beaconManager.setRangeNotifier(new RangeNotifier() {
+            @Override
+            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+                for(Beacon oneBeacon :  beacons){
+                    Log.d(TAG,"distance: " + oneBeacon.getDistance() + "id: " + oneBeacon.getId1() + "/" + oneBeacon.getId2() + "/" + oneBeacon.getId3());
+                }
+
+            }
+        }); */
+
+        try {
+
+            beaconManager.startMonitoringBeaconsInRegion(new Region("bedroom", Identifier.parse("EBEFD083-70A2-47C8-9837-E7B5634DF524"), Identifier.parse("571"), Identifier.parse("7552")));
+            beaconManager.startMonitoringBeaconsInRegion(new Region("livingroom", Identifier.parse("4B495443-4845-4E0D-0A00-000000000000"), Identifier.parse("53075"), Identifier.parse("29692")));
+        } catch (RemoteException e) {
+
+        }
+
+
+
     }
 
     @Override
@@ -98,9 +176,25 @@ public class LoggedActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+   private void logoutButton() {
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                SaveSharedPreference.clearUserName(LoggedActivity.this);
+                Intent intent = new Intent(LoggedActivity.this, LoginActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
 
 
     }
+
 
 
 

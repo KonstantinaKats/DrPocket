@@ -68,6 +68,7 @@ doctor();
                         String _fname = cursor.getString(cursor.getColumnIndex(UserContract.NewUserInfo.SURNAME));
                         String _fnumb = cursor.getString(cursor.getColumnIndex(UserContract.NewUserInfo.USER_NUMBER));
                         Toast.makeText(LoginActivity.this, "Login Succeeded", Toast.LENGTH_SHORT).show();
+                        SaveSharedPreference.setUserName(LoginActivity.this, uname);
                         Intent intent = new Intent(LoginActivity.this, LoggedActivity.class);
                         intent.putExtra("fullname", surname.getText().toString());
                       //  intent.putExtra("usernumr", _fnumb);
