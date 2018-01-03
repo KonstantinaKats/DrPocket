@@ -13,10 +13,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +20,6 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
     Spinner MainDisease,SpecifiedDisease;
     EditText Name, Surname, Personal_number, Blood, Oxygen;
     Button btnSave;
-//    Context context = this;
-//    UserDbHelper userDbHelper;
-//    SQLiteDatabase sqLiteDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -43,9 +36,6 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
         MainDisease.setOnItemSelectedListener(this);
         btnSave = (Button)findViewById(R.id.save);
 
-        //Load data when app opened
-        //new GetData().execute(Common.getAddressAPI());
-
         //Add event to button
         btnSave.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -56,7 +46,7 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
                             Blood.getText().toString(),
                             Oxygen.getText().toString(),
                             MainDisease.getSelectedItem().toString(),
-                            SpecifiedDisease.getSelectedItem().toString()).execute(Common.getAddressAPI());
+                            SpecifiedDisease.getSelectedItem().toString()).execute(Common.postNewUser());
             }
         });
 
@@ -297,47 +287,6 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
         // TODO Auto-generated method stub
     }
 
-    //function process data
-    private class GetData extends AsyncTask<String,Void,String>{
-        ProgressDialog pd = new ProgressDialog(HomeActivity.this);
-
-        @Override
-        protected void onPreExecute(){
-            super.onPreExecute();
-            //Pre Process
-            pd.setTitle("Please wait");
-            pd.show();
-        }
-
-
-        @Override
-        protected void onPostExecute(String s){
-            super.onPostExecute(s);
-            //done process
-
-            //use Gson to parse Json to Class
-            Gson gson = new Gson();
-            Type user = new TypeToken<User>(){}.getType();
-            user = gson.fromJson(s,user);
-
-            pd.dismiss();
-        }
-
-
-        @Override
-        protected String doInBackground(String... params) {
-            //running process...
-            String stream=null;
-            String urlString = params[0];
-
-            HTTPDataHandler http = new HTTPDataHandler();
-            stream = http.GetHTTPData(urlString);
-            return stream;
-
-        }
-
-    }
-
     private class PostData extends AsyncTask<String,String,String>{
         ProgressDialog pd = new ProgressDialog(HomeActivity.this);
         String name;
@@ -384,26 +333,7 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
-
-            //Refresh Data
-            //new GetData().execute(Common.getAddressAPI());
-
             pd.dismiss();
         }
     }
-
-//    public void adduser (View view){
-//        String name = Name.getText().toString();
-//        String surname = Surname.getText().toString();
-//        String personal_number = Personal_number.getText().toString();
-//        String blood = Blood.getText().toString();
-//        String oxygen = Oxygen.getText().toString();
-//        userDbHelper = new UserDbHelper(context);
-//        sqLiteDatabase = userDbHelper.getWritableDatabase();
-//        userDbHelper.addInformation(name,surname,personal_number,blood,oxygen,sqLiteDatabase);
-//        Toast.makeText(getBaseContext(),"Account Successfully Created",Toast.LENGTH_LONG).show();
-//        Intent signinpage = new Intent(HomeActivity.this, LoginActivity.class);
-//        startActivity(signinpage);
-//        userDbHelper.close();
-//    }
 }

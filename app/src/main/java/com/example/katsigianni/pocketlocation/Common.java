@@ -10,15 +10,15 @@ public class Common {
     private static String COLLECTION_USER="Users";
     public static String API_KEY="3kwlMoz7yqq2POGxx9XIJVVvkAZfyAQa";
 
-    public static String getAddressSingle(String surname, String personal_name){
+    public static String postNewUser(){
         String baseUrl= String.format("https://api.mlab.com/api/1/databases/"+DB_NAME+"/collections/"+COLLECTION_USER+"");
         StringBuilder stringBuilder = new StringBuilder(baseUrl);
         stringBuilder.append("?apiKey="+API_KEY);
         return stringBuilder.toString();
     }
 
-    public static String getAddressAPI(){
-        String baseUrl= String.format("https://api.mlab.com/api/1/databases/"+DB_NAME+"/collections/"+COLLECTION_USER+"");
+    public static String postNewLocation(String personal_number){
+        String baseUrl= String.format("https://api.mlab.com/api/1/databases/"+DB_NAME+"/collections/"+personal_number+"");
         StringBuilder stringBuilder = new StringBuilder(baseUrl);
         stringBuilder.append("?apiKey="+API_KEY);
         return stringBuilder.toString();

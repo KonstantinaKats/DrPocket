@@ -1,34 +1,33 @@
 package com.example.katsigianni.pocketlocation;
 
 import android.Manifest;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.Identifier;
 import org.altbeacon.beacon.MonitorNotifier;
-import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
-import java.util.Collection;
+import java.util.Date;
 
 public class LoggedActivity extends AppCompatActivity implements BeaconConsumer {
 
@@ -96,7 +95,7 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
 
         }
 
-       logoutButton();
+        logoutButton();
 
     }
 
@@ -112,13 +111,13 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
         beaconManager.addMonitorNotifier(new MonitorNotifier() {
             @Override
             public void didEnterRegion(Region region) {
-
-                    Log.i(TAG,"User is in the"+region.getId1()+" "+region.getId2()+" "+region.getId3()+" "+region.getUniqueId());
+                new PostData(region.getId1().toString(),new Date()).execute(Common.postNewLocation(SaveSharedPreference.getPersonalNumber(LoggedActivity.this)));
+                Log.i(TAG, "User is in the" + region.getId1() + " " + region.getId2() + " " + region.getId3() + " " + region.getUniqueId());
             }
 
             @Override
             public void didExitRegion(Region region) {
-                Log.i(TAG,"User exited the"+region.getId1()+" "+region.getId2()+" "+region.getId3()+" "+region.getUniqueId());
+                Log.i(TAG, "User exited the" + region.getId1() + " " + region.getId2() + " " + region.getId3() + " " + region.getUniqueId());
 
             }
 
@@ -152,7 +151,6 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
         }
 
 
-
     }
 
     @Override
@@ -178,13 +176,13 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
         });
     }
 
-   private void logoutButton() {
+    private void logoutButton() {
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                SaveSharedPreference.clearUserName(LoggedActivity.this);
+                SaveSharedPreference.clearUserInfo(LoggedActivity.this);
                 Intent intent = new Intent(LoggedActivity.this, LoginActivity.class);
                 startActivity(intent);
 
@@ -192,10 +190,41 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
         });
 
 
-
     }
 
+    private class PostData extends AsyncTask<String,String,String> {
+        ProgressDialog pd = new ProgressDialog(LoggedActivity.this);
+        String area;
+        Date date;
 
+        public PostData(String area,Date date) {
+            this.area = area;
+            this.date = date;
+        }
 
+        @Override
+        protected  void onPreExecute(){
+            super.onPreExecute();
+            pd.setTitle("Please wait...");
+            pd.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params){
+            String urlString = params[0];
+
+            HTTPDataHandler hh = new HTTPDataHandler();
+            String json="{\"area\":\""+area+"\"," +
+                    "\"date\":\"" + date + "\" }";
+            hh.PostHTTPData(urlString,json);
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String s){
+            super.onPostExecute(s);
+            pd.dismiss();
+        }
+    }
 
 }
