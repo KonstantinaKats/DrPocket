@@ -59,11 +59,20 @@
         android:id="@+id/gpsbut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="21dp"
         android:layout_marginTop="62dp"
         android:text="GPS"
+        android:layout_marginStart="21dp"
         android:layout_below="@+id/imageButton"
-        android:layout_toStartOf="@+id/button2" />
+        android:layout_alignStart="@+id/textView2" />
+
+    <Button
+        android:id="@+id/activitybut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/gpsbut"
+        android:layout_alignBottom="@+id/gpsbut"
+        android:layout_alignEnd="@+id/button2"
+        android:text="Activity" />
 
 
 </RelativeLayout>
