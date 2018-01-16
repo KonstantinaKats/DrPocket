@@ -17,4 +17,5 @@
         <item>Urogenital System diseases</item>
         <item>External causes of morbidity and mortality</item>
     </string-array>
+    <string name="title_activity_gps">GPSActivity</string>
 </resources>

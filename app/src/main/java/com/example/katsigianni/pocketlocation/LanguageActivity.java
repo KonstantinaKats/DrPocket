@@ -11,6 +11,7 @@ public class LanguageActivity extends AppCompatActivity {
 
     public ImageButton button2;
     public Button doctorbut;
+    public Button gpsbuttn;
 
     public void init(){
         button2= (ImageButton)findViewById(R.id.button2);
@@ -35,11 +36,24 @@ public class LanguageActivity extends AppCompatActivity {
         });
     }
 
+    public void gpstest(){
+        gpsbuttn= (Button)findViewById(R.id.gpsbut);
+        gpsbuttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent gpspage = new Intent(LanguageActivity.this, GPSActivity.class);
+                startActivity(gpspage);
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_language);
         init();
+        gpstest();
 
 
 

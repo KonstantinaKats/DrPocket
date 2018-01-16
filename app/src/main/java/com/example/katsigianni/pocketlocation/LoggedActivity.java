@@ -109,6 +109,11 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
     public void onBeaconServiceConnect() {
 
         beaconManager.addMonitorNotifier(new MonitorNotifier() {
+            boolean flag1;
+            boolean flag2;
+
+
+
             @Override
             public void didEnterRegion(Region region) {
                 new PostData(region.getUniqueId().toString(),new Date()).execute(Common.postNewLocation(SaveSharedPreference.getPersonalNumber(LoggedActivity.this)));
@@ -118,12 +123,10 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
             @Override
             public void didExitRegion(Region region) {
                 Log.i(TAG, "User exited the" + region.getId1() + " " + region.getId2() + " " + region.getId3() + " " + region.getUniqueId());
-
             }
 
             @Override
             public void didDetermineStateForRegion(int state, Region region) {
-
 
             }
 
