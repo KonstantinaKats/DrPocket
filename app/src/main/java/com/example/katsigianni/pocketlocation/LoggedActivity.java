@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.RemoteException;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
 
 import org.altbeacon.beacon.BeaconConsumer;
@@ -112,17 +114,43 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
             boolean flag1;
             boolean flag2;
 
+            private void xronometro(){
+                if (flag1 && flag2) {
+                    new CountDownTimer(30000, 1000) {
+                        @Override
+                        public void onTick(long l) {
 
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            Activitytracking activitytracking = new Activitytracking();
+                        }
+                    }.start();
+                }
+
+            }
 
             @Override
             public void didEnterRegion(Region region) {
                 new PostData(region.getUniqueId().toString(),new Date()).execute(Common.postNewLocation(SaveSharedPreference.getPersonalNumber(LoggedActivity.this)));
                 Log.i(TAG, "User is in the" + region.getId1() + " " + region.getId2() + " " + region.getId3() + " " + region.getUniqueId());
+                if("bedroom".equals(region.getUniqueId())){
+                    flag1 = false;
+                } else{
+                    flag2 = false;
+                }
             }
 
             @Override
             public void didExitRegion(Region region) {
                 Log.i(TAG, "User exited the" + region.getId1() + " " + region.getId2() + " " + region.getId3() + " " + region.getUniqueId());
+                if("bedroom".equals(region.getUniqueId())){
+                    flag1 = true;
+                } else{
+                    flag2 = true;
+                }
+
             }
 
             @Override
