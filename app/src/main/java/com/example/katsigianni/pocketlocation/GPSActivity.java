@@ -1,5 +1,6 @@
 package com.example.katsigianni.pocketlocation;
 
+import android.app.PendingIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.Activity;
@@ -26,6 +27,7 @@ import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -58,6 +60,7 @@ public class GPSActivity extends AppCompatActivity implements ConnectionCallback
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
+                .addApi(ActivityRecognition.API)
                 .build();
 
         if (mGoogleApiClient != null) {
@@ -75,6 +78,10 @@ public class GPSActivity extends AppCompatActivity implements ConnectionCallback
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+        Intent intent = new Intent( this, ActivityRecognizedService.class );
+        PendingIntent pendingIntent = PendingIntent.getService( this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT );
+        ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates( mGoogleApiClient, 3000, pendingIntent );
+
         settingRequest();
     }
 
