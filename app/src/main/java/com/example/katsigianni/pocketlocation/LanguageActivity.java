@@ -10,9 +10,7 @@ import android.widget.ImageButton;
 public class LanguageActivity extends AppCompatActivity {
 
     public ImageButton button2;
-    public Button doctorbut;
-    public Button gpsbuttn;
-    public Button activbuttn;
+    public Button gpsButton;
 
     public void init(){
         button2= (ImageButton)findViewById(R.id.button2);
@@ -38,25 +36,13 @@ public class LanguageActivity extends AppCompatActivity {
     }
 
     public void gpstest(){
-        gpsbuttn= (Button)findViewById(R.id.gpsbut);
-        gpsbuttn.setOnClickListener(new View.OnClickListener() {
+        gpsButton = (Button)findViewById(R.id.gpsbut);
+        gpsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent gpspage = new Intent(LanguageActivity.this, GPSActivity.class);
                 startActivity(gpspage);
-            }
-        });
-    }
-
-    public void activitytest(){
-        gpsbuttn= (Button)findViewById(R.id.activitybut);
-        gpsbuttn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent activitypage = new Intent(LanguageActivity.this, Activitytracking.class);
-                startActivity(activitypage);
             }
         });
     }
@@ -67,7 +53,6 @@ public class LanguageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_language);
         init();
         gpstest();
-        activitytest();
 
 
 

@@ -124,7 +124,7 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
 
                         @Override
                         public void onFinish() {
-                            Activitytracking activitytracking = new Activitytracking();
+
                         }
                     }.start();
                 }
