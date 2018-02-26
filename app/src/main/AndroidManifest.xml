@@ -34,6 +34,7 @@
         <activity android:name=".GPSActivity" />
 
         <service android:name=".ActivityRecognizedService" />
+        <service android:name=".GPSService"  />
 
     </application>
 
