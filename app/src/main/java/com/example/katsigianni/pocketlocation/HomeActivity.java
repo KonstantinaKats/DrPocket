@@ -1,7 +1,6 @@
 package com.example.katsigianni.pocketlocation;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,8 +25,6 @@ public class HomeActivity extends AppCompatActivity implements OnItemSelectedLis
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        startService(new Intent(this, GPSService.class));
 
         Name = (EditText) findViewById(R.id.name);
         Surname = (EditText) findViewById(R.id.surname);
