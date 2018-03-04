@@ -78,6 +78,7 @@ public class GPSActivity extends AppCompatActivity implements ConnectionCallback
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+        startService(new Intent(this, GPSService.class));
         Intent intent = new Intent( this, ActivityRecognizedService.class );
         PendingIntent pendingIntent = PendingIntent.getService( this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT );
         ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates( mGoogleApiClient, 3000, pendingIntent );
