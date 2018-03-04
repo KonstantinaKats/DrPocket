@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.google.android.gms.location.LocationRequest;
+
 /**
  * Created by KonstantinaKats on 26-Feb-18.
  */
@@ -16,7 +18,7 @@ public class GPSService extends Service
 {
     private static final String TAG = "BOOMBOOMTESTGPS";
     private LocationManager mLocationManager = null;
-    private static final int LOCATION_INTERVAL = 2000; //per 2 seconds
+    private static final int LOCATION_INTERVAL = 3000; //per 3 seconds
     private static final float LOCATION_DISTANCE = 10f; //
 
     private class LocationListener implements android.location.LocationListener
@@ -57,7 +59,10 @@ public class GPSService extends Service
 
     LocationListener[] mLocationListeners = new LocationListener[] {
             new LocationListener(LocationManager.GPS_PROVIDER),
-            new LocationListener(LocationManager.NETWORK_PROVIDER)
+            new LocationListener(LocationManager.NETWORK_PROVIDER),
+
+
+
     };
 
     @Override
@@ -81,6 +86,7 @@ public class GPSService extends Service
         initializeLocationManager();
         try {
             mLocationManager.requestLocationUpdates(
+
                     LocationManager.NETWORK_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
                     mLocationListeners[1]);
         } catch (java.lang.SecurityException ex) {

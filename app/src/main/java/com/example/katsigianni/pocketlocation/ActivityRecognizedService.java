@@ -30,6 +30,7 @@ public class ActivityRecognizedService extends IntentService {
         if (ActivityRecognitionResult.hasResult(intent)) {
             ActivityRecognitionResult result = ActivityRecognitionResult.extractResult(intent);
             handleDetectedActivities(result.getProbableActivities());
+
         }
     }
 
