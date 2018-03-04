@@ -35,11 +35,6 @@ public class ActivityRecognizedService extends IntentService {
 
 
     private void handleDetectedActivities(List<DetectedActivity> probableActivities) {
-
-        Log.e("ActivityRecogition", "Mpikeee");
-        Log.e("ActivityRecogition", "Longitude: " + SaveSharedPreference.getLastLocationLongitude(ActivityRecognizedService.this).length());
-        Log.e("ActivityRecogition", "Latitude: " + SaveSharedPreference.getLastLocationLatitude(ActivityRecognizedService.this).length());
-
         for (DetectedActivity activity : probableActivities) {
             switch (activity.getType()) {
                 case DetectedActivity.IN_VEHICLE: {

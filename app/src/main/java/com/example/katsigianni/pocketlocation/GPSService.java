@@ -34,8 +34,6 @@ public class GPSService extends Service
         {
             Log.e(TAG, "onLocationChanged: " + location);
             mLastLocation.set(location);
-            SaveSharedPreference.setLastLocationLatitude(GPSService.this, String.valueOf(location.getLatitude()));
-            SaveSharedPreference.setLastLocationLongitude(GPSService.this, String.valueOf(location.getLongitude()));
         }
 
         @Override
