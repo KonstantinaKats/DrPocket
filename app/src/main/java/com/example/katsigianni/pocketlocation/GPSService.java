@@ -35,6 +35,8 @@ public class GPSService extends Service
         public void onLocationChanged(Location location)
         {
             Log.e(TAG, "onLocationChanged: " + location);
+            Log.e(TAG, "onLocationChangedLong: " + location.getLongitude());
+            Log.e(TAG, "onLocationChangedLat: " + location.getLatitude());
             mLastLocation.set(location);
             SaveSharedPreference.setLastLocationLatitude(GPSService.this, String.valueOf(location.getLatitude()));
             SaveSharedPreference.setLastLocationLongitude(GPSService.this, String.valueOf(location.getLongitude()));
@@ -55,7 +57,7 @@ public class GPSService extends Service
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras)
         {
-            Log.e(TAG, "onStatusChanged: " + provider);
+            //Log.e(TAG, "onStatusChanged: " + provider);
         }
     }
 
