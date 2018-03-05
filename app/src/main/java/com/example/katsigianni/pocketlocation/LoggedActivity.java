@@ -11,6 +11,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+
+import android.os.Handler;
 import android.os.RemoteException;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -31,6 +33,8 @@ import org.altbeacon.beacon.Region;
 
 import java.util.Date;
 
+
+
 public class LoggedActivity extends AppCompatActivity implements BeaconConsumer {
 
     public static final String TAG = "BeaconsEverywhere";
@@ -40,6 +44,12 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
     private LocationListener locationListener;
     private Button logout;
     private BeaconManager beaconManager;
+    private Handler handler;
+    private long timeRemaining = 5000;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +66,19 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
         t = (TextView) findViewById(R.id.coors);
         b = (Button) findViewById(R.id.buttoncoor);
         logout = (Button) findViewById(R.id.logoutbut);
+        handler = new Handler();
+
+
+
+
+
+
+
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
+
+
             @Override
             public void onLocationChanged(Location location) {
 
@@ -114,22 +134,7 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
             boolean flag1;
             boolean flag2;
 
-            private void xronometro(){
-                if (flag1 && flag2) {
-                    new CountDownTimer(30000, 1000) {
-                        @Override
-                        public void onTick(long l) {
 
-                        }
-
-                        @Override
-                        public void onFinish() {
-
-                        }
-                    }.start();
-                }
-
-            }
 
             @Override
             public void didEnterRegion(Region region) {
@@ -149,6 +154,28 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
                     flag1 = true;
                 } else{
                     flag2 = true;
+                }
+                if(flag1 && flag2)
+                {
+
+                    Log.i(TAG,"hello");
+                 final Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+
+                            Log.d(TAG,"I'm running");
+                            timeRemaining = timeRemaining - 1000;
+                            if(timeRemaining > 0) {
+                                handler.postDelayed(this, 1000);
+                            }
+                            else{
+                                Log.d(TAG,"finish");
+                                startService(new Intent(LoggedActivity.this, GPSService.class));
+                            }
+                        }
+                    };
+                    handler.postDelayed(runnable, 1000);
+
                 }
 
             }
