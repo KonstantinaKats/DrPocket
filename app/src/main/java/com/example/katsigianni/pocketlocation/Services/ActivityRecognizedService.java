@@ -41,43 +41,43 @@ public class ActivityRecognizedService extends IntentService {
         for (DetectedActivity activity : probableActivities) {
             switch (activity.getType()) {
                 case DetectedActivity.IN_VEHICLE: {
-                    if (activity.getConfidence() >= 75) {
+                    if (activity.getConfidence() >= 65) {
                         Log.e("ActivityRecognition", "In Vehicle: " + activity.getConfidence());
                     }
                     break;
                 }
                 case DetectedActivity.ON_BICYCLE: {
-                    if (activity.getConfidence() >= 75) {
+                    if (activity.getConfidence() >= 65) {
                         Log.e("ActivityRecognition", "On Bicycle: " + activity.getConfidence());
                     }
                     break;
                 }
-                case DetectedActivity.ON_FOOT: {
-                    if (activity.getConfidence() >= 75) {
-                        Log.e("ActivityRecognition", "On Foot: " + activity.getConfidence());
-                    }
-                    break;
-                }
+//                case DetectedActivity.ON_FOOT: {
+//                    if (activity.getConfidence() >= 65) {
+//                        Log.e("ActivityRecognition", "On Foot: " + activity.getConfidence());
+//                    }
+//                    break;
+//                }
                 case DetectedActivity.RUNNING: {
-                    if (activity.getConfidence() >= 75) {
+                    if (activity.getConfidence() >= 65) {
                         Log.e("ActivityRecognition", "Running: " + activity.getConfidence());
                     }
                     break;
                 }
                 case DetectedActivity.STILL: {
-                    if (activity.getConfidence() >= 75) {
+                    if (activity.getConfidence() >= 65) {
                         Log.e("ActivityRecognition", "Still: " + activity.getConfidence());
                     }
                     break;
                 }
                 case DetectedActivity.TILTING: {
-                    if (activity.getConfidence() >= 75) {
+                    if (activity.getConfidence() >= 65) {
                         Log.e("ActivityRecognition", "Tilting: " + activity.getConfidence());
                     }
                     break;
                 }
                 case DetectedActivity.WALKING: {
-                    if (activity.getConfidence() >= 75) {
+                    if (activity.getConfidence() >= 65) {
                         Log.e("ActivityRecognition", "Walking: " + activity.getConfidence());
 //                        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 //                        builder.setContentText("Are you walking?");
@@ -88,7 +88,7 @@ public class ActivityRecognizedService extends IntentService {
                     break;
                 }
                 case DetectedActivity.UNKNOWN: {
-                    if (activity.getConfidence() >= 75) {
+                    if (activity.getConfidence() >= 65) {
                         Log.e("ActivityRecognition", "Unknown: " + activity.getConfidence());
                     }
                     break;
