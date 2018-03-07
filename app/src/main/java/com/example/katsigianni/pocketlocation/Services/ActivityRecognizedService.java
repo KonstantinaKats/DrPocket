@@ -1,9 +1,10 @@
-package com.example.katsigianni.pocketlocation;
+package com.example.katsigianni.pocketlocation.Services;
 
 import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.katsigianni.pocketlocation.SaveSharedPreference;
 import com.google.android.gms.location.ActivityRecognitionResult;
 import com.google.android.gms.location.DetectedActivity;
 
@@ -34,8 +35,8 @@ public class ActivityRecognizedService extends IntentService {
 
     private void handleDetectedActivities(List<DetectedActivity> probableActivities) {
 
-        Log.e("ActivityRecogition", "Longitude: " + SaveSharedPreference.getLastLocationLongitude(ActivityRecognizedService.this).length());
-        Log.e("ActivityRecogition", "Latitude: " + SaveSharedPreference.getLastLocationLatitude(ActivityRecognizedService.this).length());
+        Log.e("ActivityRecogition", "Longitude: " + SaveSharedPreference.getLastLocationLongitude(ActivityRecognizedService.this));
+        Log.e("ActivityRecogition", "Latitude: " + SaveSharedPreference.getLastLocationLatitude(ActivityRecognizedService.this));
 
         for (DetectedActivity activity : probableActivities) {
             switch (activity.getType()) {

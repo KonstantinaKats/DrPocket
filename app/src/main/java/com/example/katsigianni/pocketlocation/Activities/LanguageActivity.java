@@ -1,4 +1,4 @@
-package com.example.katsigianni.pocketlocation;
+package com.example.katsigianni.pocketlocation.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+
+import com.example.katsigianni.pocketlocation.R;
+import com.example.katsigianni.pocketlocation.SaveSharedPreference;
 
 public class LanguageActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.katsigianni.pocketlocation;
+package com.example.katsigianni.pocketlocation.Services;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -6,9 +6,10 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.util.Log;
 
-import com.google.android.gms.location.LocationRequest;
+import com.example.katsigianni.pocketlocation.SaveSharedPreference;
 
 /**
  * Created by KonstantinaKats on 26-Feb-18.
@@ -46,6 +47,8 @@ public class GPSService extends Service
         public void onProviderDisabled(String provider)
         {
             Log.e(TAG, "onProviderDisabled: " + provider);
+            Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(i);
         }
 
         @Override

@@ -10,7 +10,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.katsigianni.pocketlocation.LoggedActivity">
+    tools:context="com.example.katsigianni.pocketlocation.Activities.LoggedActivity">
 
     <TextView
     android:text="Welcome!"
@@ -46,25 +46,6 @@
         android:layout_marginTop="73dp"
         android:layout_below="@+id/add"
         android:layout_toEndOf="@+id/coors" />
-
-    <TextView
-        android:id="@+id/coors"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/imageView4"
-        android:layout_marginBottom="74dp"
-        android:layout_toStartOf="@+id/add" />
-
-    <Button
-        android:id="@+id/buttoncoor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="START"
-        android:background="@color/colorPrimaryDark"
-        android:layout_marginBottom="66dp"
-        android:layout_marginStart="20dp"
-        android:layout_above="@+id/logoutbut"
-        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/logoutbut"

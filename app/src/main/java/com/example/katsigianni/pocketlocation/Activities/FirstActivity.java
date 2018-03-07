@@ -1,10 +1,12 @@
-package com.example.katsigianni.pocketlocation;
+package com.example.katsigianni.pocketlocation.Activities;
 
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
+
+import com.example.katsigianni.pocketlocation.R;
 
 public class FirstActivity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 3500;

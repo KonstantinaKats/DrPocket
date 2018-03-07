@@ -1,4 +1,4 @@
-package com.example.katsigianni.pocketlocation;
+package com.example.katsigianni.pocketlocation.Activities;
 
 import android.app.PendingIntent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,17 +9,17 @@ import android.content.IntentSender;
 import android.content.IntentSender.SendIntentException;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.katsigianni.pocketlocation.R;
+import com.example.katsigianni.pocketlocation.Services.ActivityRecognizedService;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;

@@ -1,4 +1,4 @@
-package com.example.katsigianni.pocketlocation;
+package com.example.katsigianni.pocketlocation.Activities;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -10,7 +10,6 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 
 import android.os.Handler;
 import android.os.RemoteException;
@@ -21,8 +20,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.TextView;
+
+import com.example.katsigianni.pocketlocation.Common;
+import com.example.katsigianni.pocketlocation.HTTPDataHandler;
+import com.example.katsigianni.pocketlocation.R;
+import com.example.katsigianni.pocketlocation.SaveSharedPreference;
+import com.example.katsigianni.pocketlocation.Services.GPSService;
 
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
@@ -38,18 +42,10 @@ import java.util.Date;
 public class LoggedActivity extends AppCompatActivity implements BeaconConsumer {
 
     public static final String TAG = "BeaconsEverywhere";
-    private Button b;
-    private TextView t;
-    private LocationManager locationManager;
-    private LocationListener locationListener;
     private Button logout;
     private BeaconManager beaconManager;
     private Handler handler;
     private long timeRemaining = 5000;
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,62 +56,8 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
         beaconManager.bind(this);
 
-        //   TextView welc=(TextView)findViewById(R.id.welcome);
-        // welc.setText(getIntent().getExtras().getString("fullname"));
-
-        t = (TextView) findViewById(R.id.coors);
-        b = (Button) findViewById(R.id.buttoncoor);
         logout = (Button) findViewById(R.id.logoutbut);
         handler = new Handler();
-
-
-
-
-
-
-
-
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-
-
-            @Override
-            public void onLocationChanged(Location location) {
-
-                t.append("\n " + location.getLongitude() + " " + location.getLatitude());
-
-            }
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String s) {
-
-
-            }
-
-            @Override
-            public void onProviderDisabled(String s) {
-
-                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(i);
-
-            }
-        };
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET}
-                        , 10);
-            }
-            return;
-        }else{
-            configureButton();
-
-        }
 
         logoutButton();
 
@@ -188,20 +130,7 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
 
         });
 
-
-
-    /*    beaconManager.setRangeNotifier(new RangeNotifier() {
-            @Override
-            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-                for(Beacon oneBeacon :  beacons){
-                    Log.d(TAG,"distance: " + oneBeacon.getDistance() + "id: " + oneBeacon.getId1() + "/" + oneBeacon.getId2() + "/" + oneBeacon.getId3());
-                }
-
-            }
-        }); */
-
         try {
-
             beaconManager.startMonitoringBeaconsInRegion(new Region("bedroom", Identifier.parse("EBEFD083-70A2-47C8-9837-E7B5634DF524"), Identifier.parse("571"), Identifier.parse("7552")));
             beaconManager.startMonitoringBeaconsInRegion(new Region("livingroom", Identifier.parse("4B495443-4845-4E0D-0A00-000000000000"), Identifier.parse("53075"), Identifier.parse("29692")));
         } catch (RemoteException e) {
@@ -215,23 +144,10 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case 10:
-                configureButton();
                 break;
             default:
                 break;
         }
-    }
-
-    private void configureButton() {
-
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //noinspection MissingPermission
-                locationManager.requestLocationUpdates("gps", 5000, 5, locationListener);
-
-            }
-        });
     }
 
     private void logoutButton() {

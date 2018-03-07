@@ -1,4 +1,4 @@
-package com.example.katsigianni.pocketlocation;
+package com.example.katsigianni.pocketlocation.Activities;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.example.katsigianni.pocketlocation.Common;
+import com.example.katsigianni.pocketlocation.HTTPDataHandler;
+import com.example.katsigianni.pocketlocation.R;
 
 import java.util.ArrayList;
 import java.util.List;
