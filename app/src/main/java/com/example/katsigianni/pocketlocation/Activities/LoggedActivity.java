@@ -72,10 +72,10 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
                 Log.i(TAG, "User is in the" + region.getId1() + " " + region.getId2() + " " + region.getId3() + " " + region.getUniqueId());
                 if("bedroom".equals(region.getUniqueId())){
                     flag1 = false;
-                    SaveSharedPreference.setExitBedroom(LoggedActivity.class , String.valueOf(flag1));
+                    SaveSharedPreference.setExitBedroom(LoggedActivity.this , String.valueOf(flag1));
                 } else{
                     flag2 = false;
-                    SaveSharedPreference.setExitLivingRoom(LoggedActivity.class , String.valueOf(flag2));
+                    SaveSharedPreference.setExitLivingRoom(LoggedActivity.this , String.valueOf(flag2));
                 }
             }
 
@@ -84,10 +84,10 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
                 Log.i(TAG, "User exited the" + region.getId1() + " " + region.getId2() + " " + region.getId3() + " " + region.getUniqueId());
                 if("bedroom".equals(region.getUniqueId())){
                     flag1 = true;
-                    SaveSharedPreference.setExitBedroom(LoggedActivity.class , String.valueOf(flag1));
+                    SaveSharedPreference.setExitBedroom(LoggedActivity.this , String.valueOf(flag1));
                 } else{
                     flag2 = true;
-                    SaveSharedPreference.setExitLivingRoom(LoggedActivity.class , String.valueOf(flag2));
+                    SaveSharedPreference.setExitLivingRoom(LoggedActivity.this , String.valueOf(flag2));
                 }
 
             }

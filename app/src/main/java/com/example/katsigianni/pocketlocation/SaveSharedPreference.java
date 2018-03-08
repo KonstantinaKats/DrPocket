@@ -23,7 +23,7 @@ public class SaveSharedPreference {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
     }
 
-    public static void setExitLivingRoom (Class<LoggedActivity> ctx, String exitLivingRoom)
+    public static void setExitLivingRoom (Context ctx, String exitLivingRoom)
     {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         editor.putString(EXIT_LIVING_ROOM, exitLivingRoom);
@@ -35,7 +35,7 @@ public class SaveSharedPreference {
         return getSharedPreferences(ctx).getString(EXIT_LIVING_ROOM, "");
     }
 
-    public static void setExitBedroom (Class<LoggedActivity> ctx, String exitBedroom)
+    public static void setExitBedroom (Context ctx, String exitBedroom)
     {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         editor.putString(EXIT_BEDROOM, exitBedroom);
