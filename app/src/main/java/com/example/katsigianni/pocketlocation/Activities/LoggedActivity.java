@@ -1,32 +1,21 @@
 package com.example.katsigianni.pocketlocation.Activities;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-
 import android.os.Handler;
 import android.os.RemoteException;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.katsigianni.pocketlocation.Common;
 import com.example.katsigianni.pocketlocation.HTTPDataHandler;
 import com.example.katsigianni.pocketlocation.R;
 import com.example.katsigianni.pocketlocation.SaveSharedPreference;
-import com.example.katsigianni.pocketlocation.Services.GPSService;
+import com.example.katsigianni.pocketlocation.Services.CheckForBeaconsService;
 
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
@@ -44,11 +33,11 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
     public static final String TAG = "BeaconsEverywhere";
     private Button logout;
     private BeaconManager beaconManager;
-    private Handler handler;
-    private long timeRemaining = 5000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        startService(new Intent(this, CheckForBeaconsService.class));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged);
 
@@ -57,7 +46,6 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
         beaconManager.bind(this);
 
         logout = (Button) findViewById(R.id.logoutbut);
-        handler = new Handler();
 
         logoutButton();
 
@@ -84,8 +72,10 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
                 Log.i(TAG, "User is in the" + region.getId1() + " " + region.getId2() + " " + region.getId3() + " " + region.getUniqueId());
                 if("bedroom".equals(region.getUniqueId())){
                     flag1 = false;
+                    SaveSharedPreference.setExitBedroom(LoggedActivity.class , String.valueOf(flag1));
                 } else{
                     flag2 = false;
+                    SaveSharedPreference.setExitLivingRoom(LoggedActivity.class , String.valueOf(flag2));
                 }
             }
 
@@ -94,30 +84,10 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
                 Log.i(TAG, "User exited the" + region.getId1() + " " + region.getId2() + " " + region.getId3() + " " + region.getUniqueId());
                 if("bedroom".equals(region.getUniqueId())){
                     flag1 = true;
+                    SaveSharedPreference.setExitBedroom(LoggedActivity.class , String.valueOf(flag1));
                 } else{
                     flag2 = true;
-                }
-                if(flag1 && flag2)
-                {
-
-                    Log.i(TAG,"hello");
-                 final Runnable runnable = new Runnable() {
-                        @Override
-                        public void run() {
-
-                            Log.d(TAG,"I'm running");
-                            timeRemaining = timeRemaining - 1000;
-                            if(timeRemaining > 0) {
-                                handler.postDelayed(this, 1000);
-                            }
-                            else{
-                                Log.d(TAG,"finish");
-                                startService(new Intent(LoggedActivity.this, GPSService.class));
-                            }
-                        }
-                    };
-                    handler.postDelayed(runnable, 1000);
-
+                    SaveSharedPreference.setExitLivingRoom(LoggedActivity.class , String.valueOf(flag2));
                 }
 
             }
@@ -138,16 +108,6 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
         }
 
 
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 10:
-                break;
-            default:
-                break;
-        }
     }
 
     private void logoutButton() {

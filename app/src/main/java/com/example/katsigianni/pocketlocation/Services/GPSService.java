@@ -68,8 +68,6 @@ public class GPSService extends Service
             new LocationListener(LocationManager.GPS_PROVIDER),
             new LocationListener(LocationManager.NETWORK_PROVIDER),
 
-
-
     };
 
     @Override

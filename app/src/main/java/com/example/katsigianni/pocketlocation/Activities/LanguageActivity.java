@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 
 import com.example.katsigianni.pocketlocation.R;
 import com.example.katsigianni.pocketlocation.SaveSharedPreference;
+import com.example.katsigianni.pocketlocation.Services.GPSService;
 
 public class LanguageActivity extends AppCompatActivity {
 
@@ -16,7 +17,7 @@ public class LanguageActivity extends AppCompatActivity {
     public Button gpsButton;
 
     public void init(){
-
+        startService(new Intent(this, GPSService.class));
         button2= (ImageButton)findViewById(R.id.button2);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
