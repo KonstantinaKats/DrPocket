@@ -32,7 +32,6 @@ public class CheckForBeaconsService extends Service {
         Log.e("CheckForBeacons", "CheckForBeacons");
         if(Boolean.valueOf(SaveSharedPreference.getExitBedroom(CheckForBeaconsService.this)) && Boolean.valueOf(SaveSharedPreference.getExitLivingRoom(CheckForBeaconsService.this)))
         {
-
             Log.i("CheckForBeacons","Vgikan kai ta 2");
             final Runnable runnable = new Runnable() {
                 @Override

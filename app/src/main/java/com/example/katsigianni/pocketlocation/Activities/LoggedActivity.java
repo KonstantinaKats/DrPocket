@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.example.katsigianni.pocketlocation.HTTPDataHandler;
 import com.example.katsigianni.pocketlocation.R;
 import com.example.katsigianni.pocketlocation.SaveSharedPreference;
 import com.example.katsigianni.pocketlocation.Services.CheckForBeaconsService;
+import com.example.katsigianni.pocketlocation.Services.GPSService;
 
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
@@ -36,7 +38,8 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        startService(new Intent(this, CheckForBeaconsService.class));
+        SaveSharedPreference.setExitBedroom(LoggedActivity.this , "false");
+        SaveSharedPreference.setExitLivingRoom(LoggedActivity.this , "false");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged);
@@ -68,6 +71,10 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
 
             @Override
             public void didEnterRegion(Region region) {
+
+                //Stop GPS Service when enter a region
+                //TODO:Test it
+                stopService(new Intent(LoggedActivity.this, GPSService.class));
                 new PostData(region.getUniqueId().toString(),new Date()).execute(Common.postNewLocation(SaveSharedPreference.getPersonalNumber(LoggedActivity.this)));
                 Log.i(TAG, "User is in the" + region.getId1() + " " + region.getId2() + " " + region.getId3() + " " + region.getUniqueId());
                 if("bedroom".equals(region.getUniqueId())){
@@ -88,6 +95,9 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
                 } else{
                     flag2 = true;
                     SaveSharedPreference.setExitLivingRoom(LoggedActivity.this , String.valueOf(flag2));
+                }
+                if(flag1 && flag2){
+                    startService(new Intent(LoggedActivity.this, CheckForBeaconsService.class));
                 }
 
             }
@@ -124,6 +134,16 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
         });
 
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 10:
+                break;
+            default:
+                break;
+        }
     }
 
     private class PostData extends AsyncTask<String,String,String> {
