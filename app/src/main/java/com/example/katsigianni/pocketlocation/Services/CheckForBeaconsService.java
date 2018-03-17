@@ -16,7 +16,7 @@ import com.example.katsigianni.pocketlocation.SaveSharedPreference;
 
 public class CheckForBeaconsService extends Service {
     private Handler handler;
-    private long timeRemaining = 5000;
+    private long timeRemaining = 15000;
 
     @Nullable
     @Override
@@ -45,8 +45,9 @@ public class CheckForBeaconsService extends Service {
                     else{
                         if(Boolean.valueOf(SaveSharedPreference.getExitBedroom(CheckForBeaconsService.this)) && Boolean.valueOf(SaveSharedPreference.getExitLivingRoom(CheckForBeaconsService.this))) {
                             Log.d("CheckForBeacons", "Perasa ta deuterolepta kai tora arxise to GPS");
-                            //startService(new Intent(CheckForBeaconsService.this, GPSService.class));
+                            startService(new Intent(CheckForBeaconsService.this, GPSService.class));
                         }
+                        timeRemaining = 15000;
                     }
                 }
             };
