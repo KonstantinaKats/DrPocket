@@ -73,9 +73,10 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
             public void didEnterRegion(Region region) {
 
                 //Stop GPS Service when enter a region
-                //TODO:Test it
-                stopService(new Intent(LoggedActivity.this, GPSService.class));
-                new PostData(region.getUniqueId().toString(),new Date()).execute(Common.postNewLocation(SaveSharedPreference.getPersonalNumber(LoggedActivity.this)));
+//                CheckForBeaconsService a = new CheckForBeaconsService();
+//                a.stopActivityRec();
+                //stopService(new Intent(LoggedActivity.this, GPSService.class));
+                new PostData(region.getUniqueId(),new Date()).execute(Common.postNewLocation(SaveSharedPreference.getPersonalNumber(LoggedActivity.this)));
                 Log.i(TAG, "User is in the" + region.getId1() + " " + region.getId2() + " " + region.getId3() + " " + region.getUniqueId());
                 if("bedroom".equals(region.getUniqueId())){
                     flag1 = false;
