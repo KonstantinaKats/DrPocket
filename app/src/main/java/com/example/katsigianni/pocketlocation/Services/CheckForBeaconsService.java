@@ -37,13 +37,12 @@ public class CheckForBeaconsService extends Service implements GoogleApiClient.C
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(ActivityRecognition.API)
-                .build();
-
         handler = new Handler();
+
+        if(Boolean.valueOf(SaveSharedPreference.getStopGps(CheckForBeaconsService.this)) && Boolean.valueOf(SaveSharedPreference.getGpsState(CheckForBeaconsService.this))){
+            SaveSharedPreference.setGpsState(CheckForBeaconsService.this, "false");
+            stopActivityRec();
+        }
 
         Log.e("CheckForBeacons", "CheckForBeacons");
         if(Boolean.valueOf(SaveSharedPreference.getExitBedroom(CheckForBeaconsService.this)) && Boolean.valueOf(SaveSharedPreference.getExitLivingRoom(CheckForBeaconsService.this)))
@@ -61,10 +60,11 @@ public class CheckForBeaconsService extends Service implements GoogleApiClient.C
                     else{
                         if(Boolean.valueOf(SaveSharedPreference.getExitBedroom(CheckForBeaconsService.this)) && Boolean.valueOf(SaveSharedPreference.getExitLivingRoom(CheckForBeaconsService.this))) {
                             Log.d("CheckForBeacons", "Perasa ta deuterolepta kai tora arxise to GPS");
+                            SaveSharedPreference.setGpsState(CheckForBeaconsService.this, "true");
+                            SaveSharedPreference.setStopGps(CheckForBeaconsService.this, "false");
                             if (mGoogleApiClient != null) {
                                 mGoogleApiClient.connect();
                             }
-                            //startService(new Intent(CheckForBeaconsService.this, GPSService.class));
                         }
                         timeRemaining = 15000;
                     }
@@ -78,7 +78,18 @@ public class CheckForBeaconsService extends Service implements GoogleApiClient.C
     }
 
     @Override
+    public void onCreate()
+    {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(ActivityRecognition.API)
+                .build();
+    }
+
+    @Override
     public void onConnected(@Nullable Bundle bundle) {
+        Log.d("CheckForBeacons", "ActivityRecConnect");
         Intent intent = new Intent( this, ActivityRecognizedService.class );
         PendingIntent pendingIntent = PendingIntent.getService( this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT );
         ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates( mGoogleApiClient, 3000, pendingIntent );
@@ -92,19 +103,25 @@ public class CheckForBeaconsService extends Service implements GoogleApiClient.C
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(this, "Connection Failed!", Toast.LENGTH_SHORT).show();
-//        if (connectionResult.hasResolution()) {
-//            try {
-//                // Start an Activity that tries to resolve the error
-//                connectionResult.startResolutionForResult( this , 90000);
-//            } catch (IntentSender.SendIntentException e) {
-//                e.printStackTrace();
-//            }
-//        } else {
-//            Log.i("Current Location", "Location services connection failed with code " + connectionResult.getErrorCode());
-//        }
+    }
+    protected void stopLocationUpdates() {
+        Log.d("CheckForBeacons", "Location update stoping...");
+        Intent intent = new Intent( this, ActivityRecognizedService.class );
+        PendingIntent pendingIntent = PendingIntent.getService( this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT );
+        ActivityRecognition.ActivityRecognitionApi.removeActivityUpdates( mGoogleApiClient, pendingIntent);
     }
 
     public void stopActivityRec(){
-        mGoogleApiClient.disconnect();
+        if(mGoogleApiClient != null) {
+            if (mGoogleApiClient.isConnected()) {
+                Log.d("CheckForBeacons", "killed");
+                stopLocationUpdates();
+                mGoogleApiClient.disconnect();
+            } else {
+                Log.d("CheckForBeacons", "not connected");
+            }
+        }
     }
+
+
 }

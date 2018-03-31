@@ -18,9 +18,35 @@ public class SaveSharedPreference {
     static final String LAST_LOCATION_LATITUDE= "last_location_latitude";
     static final String EXIT_BEDROOM = "exit_bedroom";
     static final String EXIT_LIVING_ROOM = "exit_living_room";
+    static final String STOP_GPS = "stop_gps";
+    static final String GPS_STATE = "gps_state";
 
     static SharedPreferences getSharedPreferences(Context ctx) {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
+    }
+
+    public static void setGpsState (Context ctx, String gpsState)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(GPS_STATE, gpsState);
+        editor.commit();
+    }
+
+    public static String getGpsState(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString(GPS_STATE, "");
+    }
+
+    public static void setStopGps (Context ctx, String stopGps)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(STOP_GPS, stopGps);
+        editor.commit();
+    }
+
+    public static String getStopGps(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString(STOP_GPS, "");
     }
 
     public static void setExitLivingRoom (Context ctx, String exitLivingRoom)
