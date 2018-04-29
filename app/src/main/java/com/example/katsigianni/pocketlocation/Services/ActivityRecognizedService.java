@@ -1,7 +1,7 @@
 package com.example.katsigianni.pocketlocation.Services;
 
 import android.app.IntentService;
-import android.app.ProgressDialog;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -108,15 +108,18 @@ public class ActivityRecognizedService extends IntentService {
             }
 
             //don't post data if the previous post and the current post is the same case
-            if (!(activityMessage.equals(SaveSharedPreference.getActivityCase(ActivityRecognizedService.this)))) {
-                new PostData(activityMessage, longitude, latitude, new Date()).execute(Common.postNewLocation(personal_number));
+            if (activityMessage!=null) {
+                if (!(activityMessage.equals(SaveSharedPreference.getActivityCase(ActivityRecognizedService.this)))) {
+                    new PostData(activityMessage, longitude, latitude, new Date()).execute(Common.postNewLocation(personal_number));
+                    SaveSharedPreference.setActivityCase(ActivityRecognizedService.this, activityMessage);
+                }
             }
         }
     }
 
 
     private class PostData extends AsyncTask<String,String,String> {
-        ProgressDialog pd = new ProgressDialog(ActivityRecognizedService.this);
+
         String activity;
         String longitude;
         String latitude;
@@ -132,8 +135,7 @@ public class ActivityRecognizedService extends IntentService {
         @Override
         protected  void onPreExecute(){
             super.onPreExecute();
-            pd.setTitle("Please wait...");
-            pd.show();
+
         }
 
         @Override
@@ -152,7 +154,7 @@ public class ActivityRecognizedService extends IntentService {
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
-            pd.dismiss();
+
         }
     }
 }

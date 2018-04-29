@@ -16,7 +16,7 @@ public class LanguageActivity extends AppCompatActivity {
     public ImageButton button2;
 
     public void init(){
-        //startService(new Intent(this, GPSService.class));
+        startService(new Intent(this, GPSService.class));
         button2= (ImageButton)findViewById(R.id.button2);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
