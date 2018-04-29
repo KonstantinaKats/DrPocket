@@ -14,7 +14,6 @@ import com.example.katsigianni.pocketlocation.Services.GPSService;
 public class LanguageActivity extends AppCompatActivity {
 
     public ImageButton button2;
-    public Button gpsButton;
 
     public void init(){
         //startService(new Intent(this, GPSService.class));
@@ -40,26 +39,12 @@ public class LanguageActivity extends AppCompatActivity {
         });
     }
 
-    public void gpstest(){
-        gpsButton = (Button)findViewById(R.id.gpsbut);
-        gpsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent gpspage = new Intent(LanguageActivity.this, GPSActivity.class);
-                startActivity(gpspage);
-            }
-        });
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_language);
         init();
-        gpstest();
-
-
 
     }
 }

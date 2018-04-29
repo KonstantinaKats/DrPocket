@@ -55,15 +55,4 @@
         android:layout_alignBottom="@+id/imageButton"
         android:onClick="gonext" />
 
-    <Button
-        android:id="@+id/gpsbut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="62dp"
-        android:text="GPS"
-        android:layout_marginStart="21dp"
-        android:layout_below="@+id/imageButton"
-        android:layout_alignStart="@+id/textView2" />
-
-
 </RelativeLayout>

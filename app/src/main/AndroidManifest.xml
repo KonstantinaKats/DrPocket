@@ -31,7 +31,6 @@
         <activity android:name=".Activities.LanguageActivity" />
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.LoggedActivity" />
-        <activity android:name=".Activities.GPSActivity" />
 
         <service android:name=".Services.ActivityRecognizedService" />
         <service android:name=".Services.GPSService"  />
