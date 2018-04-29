@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.example.katsigianni.pocketlocation.Activities.LoggedActivity;
-
 /**
  * Created by Dimitra on 12/3/2017.
  */
@@ -20,9 +18,22 @@ public class SaveSharedPreference {
     static final String EXIT_LIVING_ROOM = "exit_living_room";
     static final String STOP_GPS = "stop_gps";
     static final String GPS_STATE = "gps_state";
+    static final String ACTIVITY_CASE = "activity_case";
 
     static SharedPreferences getSharedPreferences(Context ctx) {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
+    }
+
+    public static void setActivityCase(Context ctx, String activity_case)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(ACTIVITY_CASE, activity_case);
+        editor.commit();
+    }
+
+    public static String getActivityCase(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString(ACTIVITY_CASE, "");
     }
 
     public static void setGpsState (Context ctx, String gpsState)

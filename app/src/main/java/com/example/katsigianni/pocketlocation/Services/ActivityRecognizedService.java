@@ -98,15 +98,19 @@ public class ActivityRecognizedService extends IntentService {
                     }
                     break;
                 }
-                case DetectedActivity.UNKNOWN: {
-                    if (activity.getConfidence() >= 65) {
-                        Log.e("ActivityRecognition", "Unknown: " + activity.getConfidence());
-                        activityMessage = "Unknown";
-                    }
-                    break;
-                }
+//                case DetectedActivity.UNKNOWN: {
+//                    if (activity.getConfidence() >= 65) {
+//                        Log.e("ActivityRecognition", "Unknown: " + activity.getConfidence());
+//                        activityMessage = "Unknown";
+//                    }
+//                    break;
+//                }
             }
-            new PostData(activityMessage, longitude, latitude ,new Date()).execute(Common.postNewLocation(personal_number));
+
+            //don't post data if the previous post and the current post is the same case
+            if (!(activityMessage.equals(SaveSharedPreference.getActivityCase(ActivityRecognizedService.this)))) {
+                new PostData(activityMessage, longitude, latitude, new Date()).execute(Common.postNewLocation(personal_number));
+            }
         }
     }
 

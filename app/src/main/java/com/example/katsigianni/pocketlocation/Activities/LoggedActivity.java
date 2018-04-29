@@ -36,8 +36,8 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SaveSharedPreference.setExitBedroom(LoggedActivity.this , "false");
-        SaveSharedPreference.setExitLivingRoom(LoggedActivity.this , "false");
+        SaveSharedPreference.setExitBedroom(LoggedActivity.this , "true");
+        SaveSharedPreference.setExitLivingRoom(LoggedActivity.this , "true");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged);
@@ -111,7 +111,7 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
             beaconManager.startMonitoringBeaconsInRegion(new Region("bedroom", Identifier.parse("EBEFD083-70A2-47C8-9837-E7B5634DF524"), Identifier.parse("571"), Identifier.parse("7552")));
             beaconManager.startMonitoringBeaconsInRegion(new Region("livingroom", Identifier.parse("4B495443-4845-4E0D-0A00-000000000000"), Identifier.parse("53075"), Identifier.parse("29692")));
         } catch (RemoteException e) {
-
+            Log.i(TAG, String.valueOf(e));
         }
 
 

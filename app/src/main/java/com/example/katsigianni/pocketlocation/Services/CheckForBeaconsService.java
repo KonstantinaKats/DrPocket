@@ -92,7 +92,7 @@ public class CheckForBeaconsService extends Service implements GoogleApiClient.C
         Log.d("CheckForBeacons", "ActivityRecConnect");
         Intent intent = new Intent( this, ActivityRecognizedService.class );
         PendingIntent pendingIntent = PendingIntent.getService( this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT );
-        ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates( mGoogleApiClient, 3000, pendingIntent );
+        ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates( mGoogleApiClient, 30000, pendingIntent );
     }
 
     @Override
