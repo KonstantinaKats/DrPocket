@@ -11,16 +11,27 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.katsigianni.pocketlocation.Activities.LoginActivity"
     android:orientation="vertical"
-    android:background="#ffffff"
+    android:background="@drawable/splash"
     android:weightSum="1">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/pocketlogo"
-        android:layout_marginTop="42dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/logotr"
         android:id="@+id/imageView2"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text=" Patient Sign in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold|italic"
+        android:id="@+id/textView"
+        android:textSize="30sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginTop="36dp"
+        android:layout_below="@+id/imageView2"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -34,9 +45,9 @@
         android:id="@+id/surname"
         android:textSize="20dp"
         android:hint="Surname"
-        android:layout_marginTop="50dp"
-        android:layout_below="@+id/imageView2"
-        android:layout_alignParentStart="true" />
+        android:layout_above="@+id/AMKA"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -49,9 +60,9 @@
         android:id="@+id/AMKA"
         android:textSize="20dp"
         android:hint="AMKA"
-        android:layout_marginTop="25dp"
-        android:layout_below="@+id/surname"
-        android:layout_alignParentStart="true" />
+        android:layout_above="@+id/Loginbut"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="52dp" />
 
     <Button
         android:layout_width="111dp"
@@ -65,8 +76,20 @@
         android:layout_marginBottom="26dp"
         android:layout_alignParentStart="true" />
 
+    <TextView
+        android:text="No account?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/add"
+        android:textSize="12sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textAlignment="center"
+        android:layout_above="@+id/signupbut"
+        android:layout_alignParentStart="true" />
+
+
     <Button
-        android:text="Sign up"
+        android:text="Register"
         android:layout_width="111dp"
         android:layout_height="wrap_content"
         android:id="@+id/signupbut"
