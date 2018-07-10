@@ -1,5 +1,6 @@
 package com.example.katsigianni.pocketlocation.Activities;
 
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -41,6 +42,8 @@ public class LoggedActivity extends AppCompatActivity implements BeaconConsumer 
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));

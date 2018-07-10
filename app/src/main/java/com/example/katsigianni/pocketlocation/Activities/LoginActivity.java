@@ -15,6 +15,8 @@ import com.example.katsigianni.pocketlocation.Common;
 import com.example.katsigianni.pocketlocation.HTTPDataHandler;
 import com.example.katsigianni.pocketlocation.R;
 import com.example.katsigianni.pocketlocation.SaveSharedPreference;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
 public class LoginActivity extends AppCompatActivity {

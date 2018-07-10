@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "753107450607",
+    "firebase_url": "https://drpocketlast.firebaseio.com",
+    "project_id": "drpocketlast",
+    "storage_bucket": "drpocketlast.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:753107450607:android:fae233e0f7eb74b7",
+        "android_client_info": {
+          "package_name": "com.example.katsigianni.pocketlocation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "753107450607-mcl2kct2u27f8morv6egdqhnod5chprg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.katsigianni.pocketlocation",
+            "certificate_hash": "3480ed0f02024b075d7d9bc2734f5931cdaf10bc"
+          }
+        },
+        {
+          "client_id": "753107450607-6bhnkdc2frj717afqt7vrqmbmla4j90t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDk6DuhcLUCmAGc4mOZNTlUrFxk-Qe_ves"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "753107450607-6bhnkdc2frj717afqt7vrqmbmla4j90t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
