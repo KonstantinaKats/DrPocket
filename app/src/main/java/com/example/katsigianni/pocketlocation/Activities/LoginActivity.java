@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void checkSuccess(){
         if(success){
+            FirebaseMessaging.getInstance().subscribeToTopic("PatientNews");
             //Retrieving Surname and Personal_number after successfull login and passing to LoginSucessActivity
             Toast.makeText(LoginActivity.this, "Login Succeeded", Toast.LENGTH_SHORT).show();
             SaveSharedPreference.setUserName(LoginActivity.this, surname.getText().toString());
